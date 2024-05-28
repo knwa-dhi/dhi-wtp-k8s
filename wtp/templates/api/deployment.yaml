@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-api-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-api-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.wtpapi.autoscaling.enabled }}
+  replicas: {{ .Values.wtpapi.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-api-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.wtpapi.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-api-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      imagePullSecrets: 
+        [name: {{ include "wtp.name" . }}-acr]
+      serviceAccountName: {{ include "wtp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.wtpapi.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-api
+          securityContext:
+            {{- toYaml .Values.wtpapi.securityContext | nindent 12 }}
+          image: "{{ .Values.wtpapi.image.repository }}:{{ .Values.wtpapi.image.tag }}"
+          imagePullPolicy: {{ .Values.wtpapi.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.wtpapi.containerPort }}
+              protocol: TCP            
+          {{- with .Values.wtpapi.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}          
+          resources:
+            {{- toYaml .Values.wtpapi.resources | nindent 12 }}
+          {{- with .Values.wtpapi.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.wtpapi.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.wtpapi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.wtpapi.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.wtpapi.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

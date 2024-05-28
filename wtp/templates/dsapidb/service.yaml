@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wtp.name" . }}-dsapidb-svc
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapidb-svc
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.dsapidb.service.type }}
+  selector:
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapidb-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+    - name: http
+      port: {{ .Values.dsapidb.service.port }}
+      protocol: TCP
+      targetPort: postgres
+      # nodePort: 30009

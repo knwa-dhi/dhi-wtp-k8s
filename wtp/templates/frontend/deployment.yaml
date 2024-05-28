@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-frontend-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-frontend-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.frontend.autoscaling.enabled }}
+  replicas: {{ .Values.frontend.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-frontend-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.frontend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-frontend-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      imagePullSecrets: 
+        [name: {{ include "wtp.name" . }}-acr]
+      serviceAccountName: {{ include "wtp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.frontend.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-frontend
+          securityContext:
+            {{- toYaml .Values.frontend.securityContext | nindent 12 }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          ports:
+            {{- if .Values.frontend.containerPorts }}
+              {{- range .Values.frontend.containerPorts }}
+            - name: {{ .name }}
+              containerPort: {{ .containerPort }}
+              protocol: {{ .protocol | default "TCP" }}
+              {{- end }}
+            {{- else }}
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            {{- end }}
+          {{- with .Values.frontend.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}          
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
+      #     volumeMounts:
+      #       - mountPath: /config
+      #         name: config
+      #         readOnly: true
+      #       - mountPath: /tmp
+      #         name: tmp
+      # volumes:
+      #   - name: config
+      #     projected:
+      #       defaultMode: 420
+      #       sources:
+      #         - configMap:
+      #             name: wtp-fe-cm
+      #   - emptyDir: {}
+      #     name: tmp    

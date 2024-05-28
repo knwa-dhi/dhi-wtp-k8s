@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wtp.name" . }}-api-svc
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-api-svc
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.wtpapi.service.type }}
+  ports:
+    {{- if .Values.wtpapi.service.ports }}
+      {{- range .Values.wtpapi.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol | default "TCP" }}    
+      targetPort: {{ .targetport | default "http" }}
+      {{- end }}
+    {{- else }}
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: https
+    {{- end }}
+  selector:
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-api-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}

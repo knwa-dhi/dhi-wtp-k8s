@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-script-config
+data:
+  create_db.sh: |
+    #!/bin/bash
+    PGPASSWORD=1234 psql -U postgres -d postgres -c "CREATE DATABASE wrddomainservicesdb;"
+    echo "Database created successfully"

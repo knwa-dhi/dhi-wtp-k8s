@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wtp.name" . }}-pyapi-svc
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-pyapi-svc
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.pyapi.service.type }}
+  ports:
+    - port: {{ .Values.pyapi.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-pyapi-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}

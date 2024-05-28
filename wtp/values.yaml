@@ -1,0 +1,459 @@
+# Default values for wtp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+imageCredentials:
+  registry: dhiacrdev.azurecr.io
+  username: dhiacrdev
+  password: 5+OOK6govNjw2EeSZqvLopI9Swrr4FGt
+  email: 
+
+wtpdb:
+  replicaCount: 1
+  postgresql:
+    enabled: true
+    username: postgres
+    password: 1234
+    database: wrddevdb
+    image:
+      repository: bitnami/postgresql
+      tag: ""
+      pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    port: 5432
+    
+
+wtpapi:
+  replicaCount: 1
+  image:
+    repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "20240520.1-dev"
+    registry:
+      username: dhiacrdev
+      password: 5+OOK6govNjw2EeSZqvLopI9Swrr4FGt
+  containerPort: 80
+  # imagePullSecrets: [
+  #   name: dhiacr
+  # ]
+  envs:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: "Development"
+    - name: ConnectionStrings__Default
+      value: "Host=mywtptls-db-svc;Port=5432;Username=postgres;Password=1234;Database=wrddevdb;Include Error Detail=true;"
+    - name: App__CorsOrigins
+      value: "https://wtptls-frontend.test.com,http://wtptls-api.test.com,https://mikemine-result.azurewebsites.net,https://mikemine.azurewebsites.net,https://mikemine-dashboard.azurewebsites.net,https://mikeminedev-result-dev.azurewebsites.net,https://mikeminedev-dashboard.azurewebsites.net,https://mikeminedev-dev.azurewebsites.net,https://datamanagement-app.azurewebsites.net,https://waterdss-wrd-dev.eu.mike-cloud-dev.com,https://mike-mine.mike-cloud-dev.com,http://localhost:1338,http://localhost:1337,http://localhost:1339,http://localhost:4200,http://localhost:8080,http://localhost:8081,http://localhost:3000,https://localhost:3000,https://localhost:3001,http://localhost:3002/,https://nile-hp-optimization-dss.westeurope.cloudapp.azure.com,https://mrc-planning-staging.westeurope.cloudapp.azure.com,https://odss.uegcl.go.ug:50004,https://mrc-training-1.westeurope.cloudapp.azure.com,https://mrc-training-2.westeurope.cloudapp.azure.com,https://mrc-training-3.westeurope.cloudapp.azure.com,https://mrc-training-4.westeurope.cloudapp.azure.com,https://waterdss-mrc.azurewebsites.net"
+    - name: App__WebUrl
+      value: "https://wtptls-frontend.test.com,"
+    - name: PortalInfo__Container
+      value: "http://wtptls-routerapi.test.com"
+    - name: PortalInfo__Url
+      value: "http://wtptls-routerapi.test.com"
+    - name: Authentication__OpenId__ClientId
+      value: "Water Tools"
+    - name: Authentication__OpenId__Authority
+      value: "https://login.mike-cloud-dev.com"
+    - name: Authentication__OpenId__Api
+      value: "https://api.mike-cloud-dev.com"
+    - name: PortalInfo__WorkspaceLandingPage
+      value: "https://wtptls-frontend.test.com/portal/workspaces/{0},https://mike-mine.mike-cloud-dev.comportal/workspaces/{0}"
+    - name: PortalInfo__Dissemination__UnsubscribeLink
+      value: "/subscriptions/unsubscribe?token={token}"
+    - name: PortalInfo__Dissemination__ApprovalLink
+      value: "/product/{product_id}/approval"
+    - name: Authentication__JwtBearer__Issuer
+      value: "https://wtptls-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
+    - name: Authentication__JwtBearer__SecurityKey
+      value: "WaterDssPortal_C421AAEE0D114E9CA"
+    - name: Authentication__JwtBearer__IsEnabled
+      value: "true"      
+    - name: Twillio__WhatsApp__AccountSid
+      value: "AC6c2442ee6b2e8627097abdc89ee01111"
+    - name: Twillio__WhatsApp__AuthToken
+      value: "f9546673b7fa5c6d6b1d5a91b1e76f18"
+    - name: Twillio__WhatsApp__Channel
+      value: "would-maybe"
+    - name: Twillio__WhatsApp__FromPhoneNumber
+      value: "+14155238886"
+    - name: Token__Key
+      value: "Rahasia7xBro?!"
+    - name: Token__Issuer
+      value: "https://wtptls-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
+    - name: Token__Expire
+      value: "2"
+    - name: Token__Audience
+      value: "https://wtptls-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
+    - name: Authentication__OpenId__ClientSecret
+      value: ""
+    - name: DeploymentType
+      value: "Kubernetes"
+    - name: Sendgrid__Secret
+      value: "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"
+    - name: PassPhrase
+      value: "wrddev_portal_key"
+    - name: DomainServices__Username
+      value: portal_admin
+    - name: DomainServices__Password
+      value: a28iDEBf2F1p7C79qn4m       
+    - name: Authentication__OpenId__ValidateIssuer
+      value: "true"
+    - name: Authentication__OpenId__Scope
+      value: "openid offline_access"
+    - name: Authentication__OpenId__ResponseType
+      value: "code"
+    - name: Authentication__OpenId__IsEnabled
+      value: "true"
+    - name: Authentication__OpenId__CallbackPath
+      value: "/authentication/callback"
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: ""
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}    
+  resources: {}
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  volumes: []
+  volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+  service:
+    # name: wtp-api-svc
+    type: ClusterIP    
+    ports:
+      - name: http
+        targetport: http
+        protocol: TCP
+        port: 80  
+
+wtprouterapi:
+  replicaCount: 1
+  image:
+    repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api-rerouter
+    pullPolicy: IfNotPresent
+    tag: "20240521.2-dev"
+  envs:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: "Production"
+    - name: CORS_ORIGINS
+      value: "https://wtptls-frontend.test.com"
+    - name: OCELOT_DOWNSTREAM_SCHEME
+      value: "http"
+    - name: OCELOT_DOWNSTREAM_HOST
+      value: "mywtptls-api-svc"
+    - name: OCELOT_DOWNSTREAM_PORT
+      value: "80"
+  service:
+      # name: wtp-routerapi-svc
+      type: ClusterIP
+      port: 80
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: {}
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
+    pullPolicy: IfNotPresent
+    tag: "20240517.2-dev"
+  # imagePullSecrets: [
+  #   name: dhiacr
+  # ]
+  containerPorts: 
+    - name: http
+      containerPort: 80
+      protocol: TCP          
+  envs:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Production
+    - name: ASPNETCORE_URLS
+      value: "http://+:80"
+    - name: Applications
+      value: "mine;mine-result;mine-dashboard;subscriptions;workspaces;datamanagement;waterstatus;planningtools;mine-reco;mine-dama"
+    - name: DefaultBaseURL
+      value: "https://wtptls-api.test.com"
+    - name: DefaultBaseURLOld
+      value: "https://wtptls-routerapi.test.com"
+    - name: DefaultBaseURLGateway
+      value: "https://wtptls-routerapi.test.com"
+    - name: DefaultDomainServicesURL
+      value: "https://domainservices-wrd-dev.eu.mike-cloud-dev.com"
+    - name: DefaultBaseURLPy
+      value: "https://wrdmainservices-wrd-dev.eu.mike-cloud-dev.com"
+    - name: ClientId
+      value: "Water Tools"
+    - name: Authority
+      value: "https://login.mike-cloud-dev.com"
+    - name: ContentDefaultSource
+      value: "wtp-frontend.test.com;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;nile-hp-optimization-dss.westeurope.cloudapp.azure.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;eramet-dss.azurewebsites.net;flowforecasting.azurewebsites.net;www.youtube.com;datamanagement-app.azurewebsites.net;datamanagement-app.azurewebsites.net;mrc-planning-staging.westeurope.cloudapp.azure.com;odss.uegcl.go.ug;mrc-training-1.westeurope.cloudapp.azure.com;mrc-training-2.westeurope.cloudapp.azure.com;mrc-training-3.westeurope.cloudapp.azure.com;mrc-training-4.westeurope.cloudapp.azure.com"
+    - name: ContentConnectSource
+      value: "login.mike-cloud-dev.com;wtp-api.test.com;wtp-routerapi.test.com;;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;events.mapbox.com;mrc-waterstatus-api.azurewebsites.net;wrd-geoserver-dev.azurewebsites.net;ipv4.icanhazip.com;mrc-waterstatus-api-dev.azurewebsites.net;dhigroup.matomo.cloud;odss.uegcl.go.ug; data:"
+    - name: ContentImageSource
+      value: "wtp-api.test.com;wtp-routerapi.test.com;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
+    - name: ContentScriptSource
+      value: "www.youtube.com;unpkg.com;api.mapbox.com;dhigroup.matomo.cloud "
+    - name: ContentStyleSource
+      value: "unpkg.com "
+    - name: ContentFontSource
+      value: "fonts.gstatic.com "
+    - name: UseContentSecurityHeader
+      value: "False"
+    - name: ContentFrameAncestors
+      value: "https://wtptls-frontend.test.com"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 3000m
+      memory: 4Gi
+  service:
+    # name: wtp-frontend-svc
+    type: ClusterIP
+    ports:
+      - name: http
+        targetport: http
+        protocol: TCP
+        port: 80            
+
+dsapidb:
+  replicaCount: 1
+  postgresql:
+    enabled: true
+    username: postgres
+    password: 1234
+    database: wrddomainservicesdb
+    image:
+      repository: bitnami/postgresql
+      tag: ""
+      pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    port: 5432
+
+dsapi:
+  replicaCount: 1
+  image:
+    repository: dhiacrdev.azurecr.io/wrd/wrd-domain-services
+    pullPolicy: IfNotPresent
+    tag: "20240213.1-dev"
+  envs:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: "Production"
+    - name: ASPNETCORE_URLS
+      value: "http://+:80"      
+    - name: ConnectionStrings__DbConnectionString
+      value: "Host=mywtptls-dsapidb-svc;Port=5432;Username=postgres;Password=1234;Database=wrddomainservicesdb;Include Error Detail=true;"
+    - name: ASPNETCORE_CONTENTROOT
+      value: "/tmp"
+    - name: Tokens__PublicRSAKey
+      value: "<RSAKeyValue><Modulus>z0jOdV64Get5/XdplajSGI2ZD0DyE1Al+MZBMf8ZUFD5PnJZwGhVcqYl6w2wbJV1KTLYyaamD4K4XC3X7APTKTs/wsCri8KsHtePJUUp9mjc1wqJL9TO/z/cqc6I6s8F8ZvOmX/nzNv8K28dA8wy9zHpDb4HMssZeduzS1VWEw/Qry7K68+Yq1MzNXKySO76ZCf6eeb7thMURnlNYff6nX3FfCDG+2miApUjac/tIcaKH2jeN3e7sT6tr6pkS35yHNbS2YH+ONOuTQUcFOINnxCTneGorv8E02M+22b+B6LPYuzu7mh/izFiaww3URhH7/n0Z40hnziAaP185qccTQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>"
+    - name: Tokens__PrivateRSAKey
+      value: "<RSAKeyValue><Modulus>z0jOdV64Get5/XdplajSGI2ZD0DyE1Al+MZBMf8ZUFD5PnJZwGhVcqYl6w2wbJV1KTLYyaamD4K4XC3X7APTKTs/wsCri8KsHtePJUUp9mjc1wqJL9TO/z/cqc6I6s8F8ZvOmX/nzNv8K28dA8wy9zHpDb4HMssZeduzS1VWEw/Qry7K68+Yq1MzNXKySO76ZCf6eeb7thMURnlNYff6nX3FfCDG+2miApUjac/tIcaKH2jeN3e7sT6tr6pkS35yHNbS2YH+ONOuTQUcFOINnxCTneGorv8E02M+22b+B6LPYuzu7mh/izFiaww3URhH7/n0Z40hnziAaP185qccTQ==</Modulus><Exponent>AQAB</Exponent><P>2NLHv7wMFKPGqMj3kgyqtUXdEmgK0MUpHrRa/RZ4VlVTrCPIiU/9Imzq8jSaB+e13S29xDqCtDQJhP4mddLt9E/IFxH66vkbvXSAdoiYeRx07QtDgbBKTyreBEnaxK0Y5DPppypXqTl+HwIz16P2RrUyR/ZDU0V/Rs2Y9WTc48c=</P><Q>9LzMlxalBTWHNcCStnJDhhc7np+awCkXL/D50xY6A08FTX532ORYnMZWD3tVHTMNESIas143vopnsb2nfhMDymHEDgC0LLloeG2LsWvQ1ztRoMq6RLbS3IeAsIwu8Pa+96yMdXHppbYqmaJEMTp51+TAH+P39ZSYNJAaTOe6l0s=</Q><DP>SN7+dzgyLzWj7NIuMo3DSc1DMY56JBQ/b6xZ8Dl/FDT1PCOCoHObtdg5VlHLeuCrRLy8zJiFmR7sHCB2uJ69jqDJtMc8N4CljBT9n9jktb+UpJ5mf83KC7VyjKpttjAe74NrAd2/PIawFqfc2JqoiLcZQQpJMlFnJ1quD7toab0=</DP><DQ>Y3mx9t9/Z6SgNpr1hy7ef0xGMW1SKzUIdbYO9VudbObbkuoKsJ/v3JlJNbW9nMa5UvN3wtxS8CG1kCs0PyxfaA1g8QgcM+mQqxJrq0vVcQZtYVvFZlShVH3HMvtnwQ2qBWWfGcWZYH+wxQ2NhizshXI3HT899BXX39WKuyOdVg0=</DQ><InverseQ>wa/Lk/u4G27cNg7R9DmlyYGD8wTC6RhPYYSW8Nokp3b2D90LkQD9l3lPjKH3+06RGUIjOzRvkepa32wH7pqxUAsWYOCf3UxhDcVWkIt5NskBcz/EKWNbhyM4cbN02yjzYHRVdA7wOJ0ErCplKROWkhtBXPAv2AGsNYcO6eBTHeU=</InverseQ><D>THSxWk9mnoDhjSE3e7E6VT4dP6gX4hHE/764m2VZg+tqE6OAAV06b0BjahCxi0uRXHHZzn8+bygrMizioLZEc8fb28zPOYzDidi+fuPE95N0KYlEUrUu6K04ihWZIOrdaWGr0aiA6moV2Dtyu0zdW5o4OQ5nf0+0hOMJffbq+bpIYqbIvd8mrfazZXkjVBP0Yfk8gP0qEqxmoupfmH+nQV5WJnYDFf76wLhqfDIx9YxaMzQy9cghmRU6E/ayKnK8Vw3DjTuLNe0oIGTVPwjp39qoyTL/6r2eJfSTqCjhI5XfPbbwGsdDwYql/I35l+b44DeGmzWePA/S2Xg2p06ujQ==</D></RSAKeyValue>"
+    - name: Swagger__SpecificationName
+      value: "WaterDssHostAPIOpenAPISpecification"
+    - name: Swagger__DocumentName
+      value: "WaterDSS DomainServices"
+    - name: Swagger__DocumentTitle
+      value: "WaterDSS DomainServices"
+    - name: Swagger__DocumentDescription
+      value: "SwaggerInfo.md"
+    - name: CORS
+      value: "localhost;wtptls-frontend.test.com;mike-mine.mike-cloud-dev.com"
+  service:
+      type: ClusterIP
+      port: 80
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: {}
+
+pyapi:
+  replicaCount: 1
+  image:
+    repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
+    pullPolicy: IfNotPresent
+    tag: "20240516.1-dev"
+  envs:
+  service:
+      type: ClusterIP
+      port: 80
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: {}
+
+geoserver:
+  replicaCount: 1
+  image:
+    repository: kartoza/geoserver
+    pullPolicy: IfNotPresent
+    tag: "2.25.0"
+  envs:
+    - name: COMMUNITY_EXTENSIONS
+      value: "cog-plugin"
+    - name: GEOSERVER_ADMIN_PASSWORD
+      value: "Geoserver123."
+    - name: GEOSERVER_ADMIN_USER
+      value: "admin"
+    - name: GEOSERVER_DATA_DIR
+      value: "/opt/geoserver/data_dir"
+    - name: HTTP_PROXY_NAME
+      value: "wtptls-geoserver.test.com"
+    - name: HTTP_SCHEME
+      value: "https"
+    - name: SSL
+      value: "true"
+    - name: STABLE_EXTENSIONS
+      value: "css-plugin,feature-pregeneralized-plugin,netcdf-plugin"
+    - name: WEBSITE_HTTPLOGGING_RETENTION_DAYS
+      value: "7"
+    - name: WEBSITES_CONTAINER_START_TIME
+      value: "1800"      
+    - name: WEBSITES_ENABLE_APP_SERVICE_STORAGE
+      value: "true"
+    - name: XFRAME_OPTIONS
+      value: "false"           
+  service:
+    type: ClusterIP
+    port: 80
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "5"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
+
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: 
+    # nginx.ingress.kubernetes.io/add-header: "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com;"
+    # cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: 5m
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /    
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: wtptls-api.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-api-svc
+            port: 80
+    - host: wtptls-routerapi.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-routerapi-svc
+            port: 80            
+    - host: wtptls-frontend.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-frontend-svc
+            port: 80      
+    - host: wtptls-db.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-db-svc
+            port: 5432                 
+    - host: wtptls-dsdb.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-dsapidb-svc
+            port: 5432
+    - host: wtptls-dsapi.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-dsapi-svc
+            port: 80         
+    - host: wtptls-pyapi.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-pyapi-svc
+            port: 80          
+    - host: wtptls-geoserver.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: mywtptls-geoserver-svc
+            port: 80                   
+  tls: #[]
+   - secretName: mywtptls-tls
+     hosts:
+      - wtptls-frontend.test.com
+      - wtptls-api.test.com
+      - "*.test.com"
+
+cert-manager: #defined by either the name or alias of your dependency in Chart.yaml
+  enabled: true
+  # namespace: cert-manager
+  installCRDs: true

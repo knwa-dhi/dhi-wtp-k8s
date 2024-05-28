@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-dsapidb-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapidb-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ default 1 .Values.dsapidb.replicaCount | int }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapidb-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapidb-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      # initContainers:
+      # - name: init-create-db
+      #   image: "{{ .Values.dsapidb.postgresql.image.repository }}:{{ .Values.dsapidb.postgresql.image.tag | default "latest" }}"
+      #   command: ['sh', '-c', 'cp /config/create_db.sh /scripts/ && chmod +x /scripts/create_db.sh && /scripts/create_db.sh']
+      #   volumeMounts:
+      #   - name: config-volume
+      #     mountPath: /config
+      #   - name: script-volume
+      #     mountPath: /scripts
+      #   env:
+      #   - name: POSTGRES_USER
+      #     value: "{{ .Values.dsapidb.postgresql.username }}"
+      #   - name: POSTGRES_PASSWORD
+      #     value: "{{ .Values.dsapidb.postgresql.password }}"
+      #   - name: PGHOST
+      #     value: "localhost"  # Ensure it tries to connect to localhost
+      containers:
+      - name: {{ .Chart.Name }}-dsapidb
+        image: "{{ .Values.dsapidb.postgresql.image.repository }}:{{ .Values.dsapidb.postgresql.image.tag | default "latest" }}"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+          name: postgres
+        env:
+        - name: POSTGRES_USER
+          value: "{{ .Values.dsapidb.postgresql.username }}"
+        - name: POSTGRES_PASSWORD
+          value: "{{ .Values.dsapidb.postgresql.password }}"
+        - name: POSTGRES_DB
+          value: "postgres"
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: ds-postgres-persistance-storage
+        - name: postgre-initdb
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: ds-postgres-persistance-storage
+          persistentVolumeClaim:
+            claimName: {{ include "wtp.name" . }}-ds-postgres-pv-claim
+        - name: postgre-initdb
+          configMap:
+            name: db-script-config
+        # - name: script-volume
+        #   emptyDir: {}

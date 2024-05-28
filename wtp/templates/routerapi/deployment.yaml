@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-routerapi-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-routerapi-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.wtprouterapi.autoscaling.enabled }}
+  replicas: {{ .Values.wtprouterapi.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-routerapi-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.wtprouterapi.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-routerapi-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      imagePullSecrets: 
+        [name: {{ include "wtp.name" . }}-acr]
+      serviceAccountName: {{ include "wtp.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}-routerapi
+          image: "{{ .Values.wtprouterapi.image.repository }}:{{ .Values.wtprouterapi.image.tag }}"
+          imagePullPolicy: {{ .Values.wtprouterapi.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.wtprouterapi.service.port }}
+              protocol: TCP
+          {{- with .Values.wtprouterapi.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}          

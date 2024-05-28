@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-pyapi-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-pyapi-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.pyapi.autoscaling.enabled }}
+  replicas: {{ .Values.pyapi.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-pyapi-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.pyapi.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-pyapi-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      imagePullSecrets: 
+        [name: {{ include "wtp.name" . }}-acr]
+      serviceAccountName: {{ include "wtp.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}-pyapi
+          image: "{{ .Values.pyapi.image.repository }}:{{ .Values.pyapi.image.tag }}"
+          imagePullPolicy: {{ .Values.pyapi.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          {{- with .Values.pyapi.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}          

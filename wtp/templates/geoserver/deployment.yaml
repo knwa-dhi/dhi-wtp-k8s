@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-geoserver-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-geoserver-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.geoserver.autoscaling.enabled }}
+  replicas: {{ .Values.geoserver.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-geoserver-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.geoserver.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-geoserver-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-geoserver
+          image: "{{ .Values.geoserver.image.repository }}:{{ .Values.geoserver.image.tag }}"
+          imagePullPolicy: {{ .Values.geoserver.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/opt/geoserver/data_dir"
+              subPath: "data_dir"
+              name: geoserver-volume
+          {{- with .Values.geoserver.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}         
+      volumes:
+        - name: geoserver-volume
+          persistentVolumeClaim:
+            claimName: {{ include "wtp.name" . }}-geoserver-pv-claim           

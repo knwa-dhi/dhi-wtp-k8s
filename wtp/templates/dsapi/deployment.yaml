@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wtp.name" . }}-dsapi-dpl
+  labels:
+    helm.sh/chart: {{ include "wtp.chart" . }}
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapi-dpl
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.dsapi.autoscaling.enabled }}
+  replicas: {{ .Values.dsapi.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapi-dpl
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      {{- with .Values.dsapi.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        helm.sh/chart: {{ include "wtp.chart" . }}
+        app.kubernetes.io/name: {{ include "wtp.name" . }}-dsapi-dpl
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      imagePullSecrets: 
+        [name: {{ include "wtp.name" . }}-acr]
+      serviceAccountName: {{ include "wtp.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}-dsapi
+          image: "{{ .Values.dsapi.image.repository }}:{{ .Values.dsapi.image.tag }}"
+          imagePullPolicy: {{ .Values.dsapi.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.dsapi.service.port }}
+              protocol: TCP
+          {{- with .Values.dsapi.envs }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}          
