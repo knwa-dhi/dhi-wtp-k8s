@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "wtp.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -60,6 +60,7 @@ Create the name of the service account to use
 {{- default "default" .Values.wtpapi.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
 
 {{- define "imagePullSecret" }}
 {{- with .Values.imageCredentials }}

@@ -10,9 +10,9 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}  
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
-  volumeName: {{ include "wtp.name" . }}-geoserver-pv
-#   storageClassName: ""
+  # volumeName: {{ include "wtp.name" . }}-geoserver-pv
+  storageClassName: manual

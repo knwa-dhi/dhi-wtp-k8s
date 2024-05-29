@@ -9,12 +9,14 @@ metadata:
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}  
 spec:
+  storageClassName: manual
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   hostPath:
-    path: /mnt/data  # Path dalam VM Minikube
+    # path: /mnt/data  # Path dalam VM Minikube
+    path: /run/desktop/mnt/host/c/DataKantor/geoserver/geoserver-hii  # Path dalam VM Minikube
     type: DirectoryOrCreate
 #   persistentVolumeReclaimPolicy: Retain
 #   flexVolume:
