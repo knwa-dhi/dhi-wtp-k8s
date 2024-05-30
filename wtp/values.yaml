@@ -45,15 +45,15 @@ wtpapi:
     - name: ASPNETCORE_ENVIRONMENT
       value: "Development"
     - name: ConnectionStrings__Default
-      value: "Host=mywtptls-db-svc;Port=5432;Username=postgres;Password=1234;Database=wrddevdb;Include Error Detail=true;"
+      value: "Host=dhiwtp-db-svc;Port=5432;Username=postgres;Password=1234;Database=wrddevdb;Include Error Detail=true;"
     - name: App__CorsOrigins
-      value: "https://wtptls-frontend.127.0.0.1.nip.io,http://wtptls-api.127.0.0.1.nip.io,https://mikemine-result.azurewebsites.net,https://mikemine.azurewebsites.net,https://mikemine-dashboard.azurewebsites.net,https://mikeminedev-result-dev.azurewebsites.net,https://mikeminedev-dashboard.azurewebsites.net,https://mikeminedev-dev.azurewebsites.net,https://datamanagement-app.azurewebsites.net,https://waterdss-wrd-dev.eu.mike-cloud-dev.com,https://mike-mine.mike-cloud-dev.com,http://localhost:1338,http://localhost:1337,http://localhost:1339,http://localhost:4200,http://localhost:8080,http://localhost:8081,http://localhost:3000,https://localhost:3000,https://localhost:3001,http://localhost:3002/,https://nile-hp-optimization-dss.westeurope.cloudapp.azure.com,https://mrc-planning-staging.westeurope.cloudapp.azure.com,https://odss.uegcl.go.ug:50004,https://mrc-training-1.westeurope.cloudapp.azure.com,https://mrc-training-2.westeurope.cloudapp.azure.com,https://mrc-training-3.westeurope.cloudapp.azure.com,https://mrc-training-4.westeurope.cloudapp.azure.com,https://waterdss-mrc.azurewebsites.net"
+      value: "https://wtp-frontend.test.com,http://wtp-api.test.com,https://mikemine-result.azurewebsites.net,https://mikemine.azurewebsites.net,https://mikemine-dashboard.azurewebsites.net,https://mikeminedev-result-dev.azurewebsites.net,https://mikeminedev-dashboard.azurewebsites.net,https://mikeminedev-dev.azurewebsites.net,https://datamanagement-app.azurewebsites.net,https://waterdss-wrd-dev.eu.mike-cloud-dev.com,https://mike-mine.mike-cloud-dev.com,http://localhost:1338,http://localhost:1337,http://localhost:1339,http://localhost:4200,http://localhost:8080,http://localhost:8081,http://localhost:3000,https://localhost:3000,https://localhost:3001,http://localhost:3002/,https://nile-hp-optimization-dss.westeurope.cloudapp.azure.com,https://mrc-planning-staging.westeurope.cloudapp.azure.com,https://odss.uegcl.go.ug:50004,https://mrc-training-1.westeurope.cloudapp.azure.com,https://mrc-training-2.westeurope.cloudapp.azure.com,https://mrc-training-3.westeurope.cloudapp.azure.com,https://mrc-training-4.westeurope.cloudapp.azure.com,https://waterdss-mrc.azurewebsites.net"
     - name: App__WebUrl
-      value: "https://wtptls-frontend.127.0.0.1.nip.io,"
+      value: "https://wtp-frontend.test.com,"
     - name: PortalInfo__Container
-      value: "http://wtptls-routerapi.127.0.0.1.nip.io"
+      value: "http://wtp-routerapi.test.com"
     - name: PortalInfo__Url
-      value: "http://wtptls-routerapi.127.0.0.1.nip.io"
+      value: "http://wtp-routerapi.test.com"
     - name: Authentication__OpenId__ClientId
       value: "Water Tools"
     - name: Authentication__OpenId__Authority
@@ -61,13 +61,13 @@ wtpapi:
     - name: Authentication__OpenId__Api
       value: "https://api.mike-cloud-dev.com"
     - name: PortalInfo__WorkspaceLandingPage
-      value: "https://wtptls-frontend.127.0.0.1.nip.io/portal/workspaces/{0},https://mike-mine.mike-cloud-dev.comportal/workspaces/{0}"
+      value: "https://wtp-frontend.test.com/portal/workspaces/{0},https://mike-mine.mike-cloud-dev.comportal/workspaces/{0}"
     - name: PortalInfo__Dissemination__UnsubscribeLink
       value: "/subscriptions/unsubscribe?token={token}"
     - name: PortalInfo__Dissemination__ApprovalLink
       value: "/product/{product_id}/approval"
     - name: Authentication__JwtBearer__Issuer
-      value: "https://wtptls-frontend.127.0.0.1.nip.io,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Authentication__JwtBearer__SecurityKey
       value: "WaterDssPortal_C421AAEE0D114E9CA"
     - name: Authentication__JwtBearer__IsEnabled
@@ -83,11 +83,11 @@ wtpapi:
     - name: Token__Key
       value: "Rahasia7xBro?!"
     - name: Token__Issuer
-      value: "https://wtptls-frontend.127.0.0.1.nip.io,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Token__Expire
       value: "2"
     - name: Token__Audience
-      value: "https://wtptls-frontend.127.0.0.1.nip.io,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Authentication__OpenId__ClientSecret
       value: ""
     - name: DeploymentType
@@ -159,11 +159,11 @@ wtprouterapi:
     - name: ASPNETCORE_ENVIRONMENT
       value: "Production"
     - name: CORS_ORIGINS
-      value: "https://wtptls-frontend.127.0.0.1.nip.io"
+      value: "https://wtp-frontend.test.com"
     - name: OCELOT_DOWNSTREAM_SCHEME
       value: "http"
     - name: OCELOT_DOWNSTREAM_HOST
-      value: "mywtptls-api-svc"
+      value: "dhiwtp-api-svc"
     - name: OCELOT_DOWNSTREAM_PORT
       value: "80"
   service:
@@ -199,11 +199,11 @@ frontend:
     - name: Applications
       value: "mine;mine-result;mine-dashboard;subscriptions;workspaces;datamanagement;waterstatus;planningtools;mine-reco;mine-dama"
     - name: DefaultBaseURL
-      value: "https://wtptls-api.127.0.0.1.nip.io"
+      value: "https://wtp-api.test.com"
     - name: DefaultBaseURLOld
-      value: "https://wtptls-routerapi.127.0.0.1.nip.io"
+      value: "https://wtp-routerapi.test.com"
     - name: DefaultBaseURLGateway
-      value: "https://wtptls-routerapi.127.0.0.1.nip.io"
+      value: "https://wtp-routerapi.test.com"
     - name: DefaultDomainServicesURL
       value: "https://domainservices-wrd-dev.eu.mike-cloud-dev.com"
     - name: DefaultBaseURLPy
@@ -213,11 +213,11 @@ frontend:
     - name: Authority
       value: "https://login.mike-cloud-dev.com"
     - name: ContentDefaultSource
-      value: "wtp-frontend.127.0.0.1.nip.io;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;nile-hp-optimization-dss.westeurope.cloudapp.azure.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;eramet-dss.azurewebsites.net;flowforecasting.azurewebsites.net;www.youtube.com;datamanagement-app.azurewebsites.net;datamanagement-app.azurewebsites.net;mrc-planning-staging.westeurope.cloudapp.azure.com;odss.uegcl.go.ug;mrc-training-1.westeurope.cloudapp.azure.com;mrc-training-2.westeurope.cloudapp.azure.com;mrc-training-3.westeurope.cloudapp.azure.com;mrc-training-4.westeurope.cloudapp.azure.com"
+      value: "wtp-frontend.test.com;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;nile-hp-optimization-dss.westeurope.cloudapp.azure.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;eramet-dss.azurewebsites.net;flowforecasting.azurewebsites.net;www.youtube.com;datamanagement-app.azurewebsites.net;datamanagement-app.azurewebsites.net;mrc-planning-staging.westeurope.cloudapp.azure.com;odss.uegcl.go.ug;mrc-training-1.westeurope.cloudapp.azure.com;mrc-training-2.westeurope.cloudapp.azure.com;mrc-training-3.westeurope.cloudapp.azure.com;mrc-training-4.westeurope.cloudapp.azure.com"
     - name: ContentConnectSource
-      value: "login.mike-cloud-dev.com;wtp-api.127.0.0.1.nip.io;wtp-routerapi.127.0.0.1.nip.io;;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;events.mapbox.com;mrc-waterstatus-api.azurewebsites.net;wrd-geoserver-dev.azurewebsites.net;ipv4.icanhazip.com;mrc-waterstatus-api-dev.azurewebsites.net;dhigroup.matomo.cloud;odss.uegcl.go.ug; data:"
+      value: "login.mike-cloud-dev.com;wtp-api.test.com;wtp-routerapi.test.com;;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;events.mapbox.com;mrc-waterstatus-api.azurewebsites.net;wrd-geoserver-dev.azurewebsites.net;ipv4.icanhazip.com;mrc-waterstatus-api-dev.azurewebsites.net;dhigroup.matomo.cloud;odss.uegcl.go.ug; data:"
     - name: ContentImageSource
-      value: "wtp-api.127.0.0.1.nip.io;wtp-routerapi.127.0.0.1.nip.io;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
+      value: "wtp-api.test.com;wtp-routerapi.test.com;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
     - name: ContentScriptSource
       value: "www.youtube.com;unpkg.com;api.mapbox.com;dhigroup.matomo.cloud "
     - name: ContentStyleSource
@@ -227,7 +227,7 @@ frontend:
     - name: UseContentSecurityHeader
       value: "False"
     - name: ContentFrameAncestors
-      value: "https://wtptls-frontend.127.0.0.1.nip.io"
+      value: "https://wtp-frontend.test.com"
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -280,7 +280,7 @@ dsapi:
     - name: ASPNETCORE_URLS
       value: "http://+:80"      
     - name: ConnectionStrings__DbConnectionString
-      value: "Host=mywtptls-dsapidb-svc;Port=5432;Username=postgres;Password=1234;Database=wrddomainservicesdb;Include Error Detail=true;"
+      value: "Host=dhiwtp-dsapidb-svc;Port=5432;Username=postgres;Password=1234;Database=wrddomainservicesdb;Include Error Detail=true;"
     - name: ASPNETCORE_CONTENTROOT
       value: "/tmp"
     - name: Tokens__PublicRSAKey
@@ -296,7 +296,7 @@ dsapi:
     - name: Swagger__DocumentDescription
       value: "SwaggerInfo.md"
     - name: CORS
-      value: "localhost;wtptls-frontend.127.0.0.1.nip.io;mike-mine.mike-cloud-dev.com"
+      value: "localhost;wtp-frontend.test.com;mike-mine.mike-cloud-dev.com"
   service:
       type: ClusterIP
       port: 80
@@ -342,7 +342,7 @@ geoserver:
     - name: GEOSERVER_DATA_DIR
       value: "/opt/geoserver/data_dir"
     - name: HTTP_PROXY_NAME
-      value: "wtptls-geoserver.127.0.0.1.nip.io"
+      value: "wtp-geoserver.test.com"
     - name: HTTP_SCHEME
       value: "https"
     - name: SSL
@@ -390,69 +390,69 @@ ingress:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: wtptls-api.127.0.0.1.nip.io
+    - host: wtp-api.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-api-svc
+            name: dhiwtp-api-svc
             port: 80
-    - host: wtptls-routerapi.127.0.0.1.nip.io
+    - host: wtp-routerapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-routerapi-svc
+            name: dhiwtp-routerapi-svc
             port: 80            
-    - host: wtptls-frontend.127.0.0.1.nip.io
+    - host: wtp-frontend.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-frontend-svc
+            name: dhiwtp-frontend-svc
             port: 80      
-    - host: wtptls-db.127.0.0.1.nip.io
+    - host: wtp-db.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-db-svc
+            name: dhiwtp-db-svc
             port: 5432                 
-    - host: wtptls-dsdb.127.0.0.1.nip.io
+    - host: wtp-dsdb.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-dsapidb-svc
+            name: dhiwtp-dsapidb-svc
             port: 5432
-    - host: wtptls-dsapi.127.0.0.1.nip.io
+    - host: wtp-dsapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-dsapi-svc
+            name: dhiwtp-dsapi-svc
             port: 80         
-    - host: wtptls-pyapi.127.0.0.1.nip.io
+    - host: wtp-pyapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-pyapi-svc
+            name: dhiwtp-pyapi-svc
             port: 80          
-    - host: wtptls-geoserver.127.0.0.1.nip.io
+    - host: wtp-geoserver.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
-            name: mywtptls-geoserver-svc
+            name: dhiwtp-geoserver-svc
             port: 80                   
   tls: #[]
-  #  - secretName: mywtptls-tls
+  #  - secretName: dhiwtp-tls
    - secretName: letsencrypt-staging-tls
      hosts:
-      - wtptls-frontend.127.0.0.1.nip.io
-      - wtptls-api.127.0.0.1.nip.io
-      - "*.nip.io"
+      - wtp-frontend.test.com
+      - wtp-api.test.com
+      - "*.test.com"
 
 cert-manager: #defined by either the name or alias of your dependency in Chart.yaml
   enabled: true

@@ -1,0 +1,29 @@
+[ req ]
+default_bits       = 2048
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+x509_extensions    = v3_ca
+prompt             = no
+
+[ req_distinguished_name ]
+C  = US
+ST = California
+L  = San Francisco
+O  = MyCompany
+OU = MyDivision
+CN = test.com
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ v3_ca ]
+subjectAltName = @alt_names
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+
+[ alt_names ]
+DNS.1 = test.com
+DNS.2 = *.test.com
+DNS.3 = wtptls-frontend.test.com
+DNS.4 = wtptls-api.test.com
+DNS.5 = wtptls-routerapi.test.com
