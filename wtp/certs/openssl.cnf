@@ -9,21 +9,19 @@ prompt             = no
 C  = US
 ST = California
 L  = San Francisco
-O  = MyCompany
+O  = DHI
 OU = MyDivision
-CN = test.com
+CN = *.hii.or.th
 
 [ req_ext ]
 subjectAltName = @alt_names
 
 [ v3_ca ]
 subjectAltName = @alt_names
-keyUsage = digitalSignature, keyEncipherment
+basicConstraints = critical, CA:TRUE
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 extendedKeyUsage = serverAuth
 
 [ alt_names ]
-DNS.1 = test.com
-DNS.2 = *.test.com
-DNS.3 = wtptls-frontend.test.com
-DNS.4 = wtptls-api.test.com
-DNS.5 = wtptls-routerapi.test.com
+DNS.1 = *.hii.or.th
+DNS.2 = hii.or.th

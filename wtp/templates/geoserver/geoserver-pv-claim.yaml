@@ -14,5 +14,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  # volumeName: {{ include "wtp.name" . }}-geoserver-pv
+  volumeName: {{ include "wtp.name" . }}-geoserver-pv
   storageClassName: manual

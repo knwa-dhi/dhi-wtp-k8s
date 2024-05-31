@@ -15,8 +15,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    # path: /mnt/data  # Path dalam VM Minikube
-    path: /run/desktop/mnt/host/c/DataKantor/geoserver/geoserver-hii  # Path dalam VM Minikube
+    # path: /mnt/data  # Path dalam VM 
+    path: /water-status-data/geoserver  # Path dalam VM 
     type: DirectoryOrCreate
 #   persistentVolumeReclaimPolicy: Retain
 #   flexVolume:
