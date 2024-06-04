@@ -14,16 +14,8 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  {{- if .Values.geoserver.volume.hostPath }}
   hostPath:
-    # path: /mnt/data  # Path dalam VM 
-    path: /water-status-data/geoserver  # Path dalam VM 
+    path: {{ .Values.geoserver.volume.hostPath }}
     type: DirectoryOrCreate
-#   persistentVolumeReclaimPolicy: Retain
-#   flexVolume:
-#     driver: "azure/blobfuse"
-#     secretRef:
-#       name: blobfusecreds
-#     options:
-#       container: geoserverdata
-#       tmppath: /tmp/blobfuse
-#       mountoptions: "--file-cache-timeout-in-seconds=120"
+  {{- end }}

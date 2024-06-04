@@ -10,8 +10,8 @@ C  = US
 ST = California
 L  = San Francisco
 O  = DHI
-OU = MyDivision
-CN = *.hii.or.th
+OU = Water Tool
+CN = *.test.com
 
 [ req_ext ]
 subjectAltName = @alt_names
@@ -23,5 +23,5 @@ keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 extendedKeyUsage = serverAuth
 
 [ alt_names ]
-DNS.1 = *.hii.or.th
-DNS.2 = hii.or.th
+DNS.1 = *.test.com
+DNS.2 = test.com

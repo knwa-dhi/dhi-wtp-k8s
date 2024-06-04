@@ -25,7 +25,7 @@ wtpdb:
   service:
     type: LoadBalancer
     port: 5432
-    
+   
 
 wtpapi:
   replicaCount: 1
@@ -47,13 +47,13 @@ wtpapi:
     - name: ConnectionStrings__Default
       value: "Host=dhiwtp-db-svc;Port=5432;Username=postgres;Password=1234;Database=wrddevdb;Include Error Detail=true;"
     - name: App__CorsOrigins
-      value: "https://wtp-frontend.hii.or.th,http://wtp-api.hii.or.th,https://mikemine-result.azurewebsites.net,https://mikemine.azurewebsites.net,https://mikemine-dashboard.azurewebsites.net,https://mikeminedev-result-dev.azurewebsites.net,https://mikeminedev-dashboard.azurewebsites.net,https://mikeminedev-dev.azurewebsites.net,https://datamanagement-app.azurewebsites.net,https://waterdss-wrd-dev.eu.mike-cloud-dev.com,https://mike-mine.mike-cloud-dev.com,http://localhost:1338,http://localhost:1337,http://localhost:1339,http://localhost:4200,http://localhost:8080,http://localhost:8081,http://localhost:3000,https://localhost:3000,https://localhost:3001,http://localhost:3002/,https://nile-hp-optimization-dss.westeurope.cloudapp.azure.com,https://mrc-planning-staging.westeurope.cloudapp.azure.com,https://odss.uegcl.go.ug:50004,https://mrc-training-1.westeurope.cloudapp.azure.com,https://mrc-training-2.westeurope.cloudapp.azure.com,https://mrc-training-3.westeurope.cloudapp.azure.com,https://mrc-training-4.westeurope.cloudapp.azure.com,https://waterdss-mrc.azurewebsites.net"
+      value: "https://wtp-frontend.test.com,http://wtp-api.test.com,https://mikemine-result.azurewebsites.net,https://mikemine.azurewebsites.net,https://mikemine-dashboard.azurewebsites.net,https://mikeminedev-result-dev.azurewebsites.net,https://mikeminedev-dashboard.azurewebsites.net,https://mikeminedev-dev.azurewebsites.net,https://datamanagement-app.azurewebsites.net,https://waterdss-wrd-dev.eu.mike-cloud-dev.com,https://mike-mine.mike-cloud-dev.com,http://localhost:1338,http://localhost:1337,http://localhost:1339,http://localhost:4200,http://localhost:8080,http://localhost:8081,http://localhost:3000,https://localhost:3000,https://localhost:3001,http://localhost:3002/,https://nile-hp-optimization-dss.westeurope.cloudapp.azure.com,https://mrc-planning-staging.westeurope.cloudapp.azure.com,https://odss.uegcl.go.ug:50004,https://mrc-training-1.westeurope.cloudapp.azure.com,https://mrc-training-2.westeurope.cloudapp.azure.com,https://mrc-training-3.westeurope.cloudapp.azure.com,https://mrc-training-4.westeurope.cloudapp.azure.com,https://waterdss-mrc.azurewebsites.net"
     - name: App__WebUrl
-      value: "https://wtp-frontend.hii.or.th,"
+      value: "https://wtp-frontend.test.com,"
     - name: PortalInfo__Container
-      value: "http://wtp-routerapi.hii.or.th"
+      value: "http://wtp-routerapi.test.com"
     - name: PortalInfo__Url
-      value: "http://wtp-routerapi.hii.or.th"
+      value: "http://wtp-routerapi.test.com"
     - name: Authentication__OpenId__ClientId
       value: "Water Tools"
     - name: Authentication__OpenId__Authority
@@ -61,13 +61,13 @@ wtpapi:
     - name: Authentication__OpenId__Api
       value: "https://api.mike-cloud-dev.com"
     - name: PortalInfo__WorkspaceLandingPage
-      value: "https://wtp-frontend.hii.or.th/portal/workspaces/{0},https://mike-mine.mike-cloud-dev.comportal/workspaces/{0}"
+      value: "https://wtp-frontend.test.com/portal/workspaces/{0},https://mike-mine.mike-cloud-dev.comportal/workspaces/{0}"
     - name: PortalInfo__Dissemination__UnsubscribeLink
       value: "/subscriptions/unsubscribe?token={token}"
     - name: PortalInfo__Dissemination__ApprovalLink
       value: "/product/{product_id}/approval"
     - name: Authentication__JwtBearer__Issuer
-      value: "https://wtp-frontend.hii.or.th,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Authentication__JwtBearer__SecurityKey
       value: "WaterDssPortal_C421AAEE0D114E9CA"
     - name: Authentication__JwtBearer__IsEnabled
@@ -83,11 +83,11 @@ wtpapi:
     - name: Token__Key
       value: "Rahasia7xBro?!"
     - name: Token__Issuer
-      value: "https://wtp-frontend.hii.or.th,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Token__Expire
       value: "2"
     - name: Token__Audience
-      value: "https://wtp-frontend.hii.or.th,https://mike-mine.mike-cloud-dev.com"
+      value: "https://wtp-frontend.test.com,https://mike-mine.mike-cloud-dev.com"
     - name: Authentication__OpenId__ClientSecret
       value: ""
     - name: DeploymentType
@@ -159,7 +159,7 @@ wtprouterapi:
     - name: ASPNETCORE_ENVIRONMENT
       value: "Production"
     - name: CORS_ORIGINS
-      value: "https://wtp-frontend.hii.or.th"
+      value: "https://wtp-frontend.test.com"
     - name: OCELOT_DOWNSTREAM_SCHEME
       value: "http"
     - name: OCELOT_DOWNSTREAM_HOST
@@ -199,11 +199,11 @@ frontend:
     - name: Applications
       value: "mine;mine-result;mine-dashboard;subscriptions;workspaces;datamanagement;waterstatus;planningtools;mine-reco;mine-dama"
     - name: DefaultBaseURL
-      value: "https://wtp-api.hii.or.th"
+      value: "https://wtp-api.test.com"
     - name: DefaultBaseURLOld
-      value: "https://wtp-routerapi.hii.or.th"
+      value: "https://wtp-routerapi.test.com"
     - name: DefaultBaseURLGateway
-      value: "https://wtp-routerapi.hii.or.th"
+      value: "https://wtp-routerapi.test.com"
     - name: DefaultDomainServicesURL
       value: "https://domainservices-wrd-dev.eu.mike-cloud-dev.com"
     - name: DefaultBaseURLPy
@@ -213,11 +213,11 @@ frontend:
     - name: Authority
       value: "https://login.mike-cloud-dev.com"
     - name: ContentDefaultSource
-      value: "wtp-frontend.hii.or.th;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;nile-hp-optimization-dss.westeurope.cloudapp.azure.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;eramet-dss.azurewebsites.net;flowforecasting.azurewebsites.net;www.youtube.com;datamanagement-app.azurewebsites.net;datamanagement-app.azurewebsites.net;mrc-planning-staging.westeurope.cloudapp.azure.com;odss.uegcl.go.ug;mrc-training-1.westeurope.cloudapp.azure.com;mrc-training-2.westeurope.cloudapp.azure.com;mrc-training-3.westeurope.cloudapp.azure.com;mrc-training-4.westeurope.cloudapp.azure.com"
+      value: "wtp-frontend.test.com;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;nile-hp-optimization-dss.westeurope.cloudapp.azure.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;eramet-dss.azurewebsites.net;flowforecasting.azurewebsites.net;www.youtube.com;datamanagement-app.azurewebsites.net;datamanagement-app.azurewebsites.net;mrc-planning-staging.westeurope.cloudapp.azure.com;odss.uegcl.go.ug;mrc-training-1.westeurope.cloudapp.azure.com;mrc-training-2.westeurope.cloudapp.azure.com;mrc-training-3.westeurope.cloudapp.azure.com;mrc-training-4.westeurope.cloudapp.azure.com"
     - name: ContentConnectSource
-      value: "login.mike-cloud-dev.com;wtp-api.hii.or.th;wtp-routerapi.hii.or.th;;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;events.mapbox.com;mrc-waterstatus-api.azurewebsites.net;wrd-geoserver-dev.azurewebsites.net;ipv4.icanhazip.com;mrc-waterstatus-api-dev.azurewebsites.net;dhigroup.matomo.cloud;odss.uegcl.go.ug; data:"
+      value: "login.mike-cloud-dev.com;wtp-api.test.com;wtp-routerapi.test.com;;domainservices-wrd-dev.eu.mike-cloud-dev.com;api.mapbox.com;events.mapbox.com;mrc-waterstatus-api.azurewebsites.net;wrd-geoserver-dev.azurewebsites.net;ipv4.icanhazip.com;mrc-waterstatus-api-dev.azurewebsites.net;dhigroup.matomo.cloud;odss.uegcl.go.ug; data:"
     - name: ContentImageSource
-      value: "wtp-api.hii.or.th;wtp-routerapi.hii.or.th;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
+      value: "wtp-api.test.com;wtp-routerapi.test.com;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
     - name: ContentScriptSource
       value: "www.youtube.com;unpkg.com;api.mapbox.com;dhigroup.matomo.cloud "
     - name: ContentStyleSource
@@ -227,7 +227,7 @@ frontend:
     - name: UseContentSecurityHeader
       value: "False"
     - name: ContentFrameAncestors
-      value: "https://wtp-frontend.hii.or.th"
+      value: "https://wtp-frontend.test.com"
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -296,7 +296,7 @@ dsapi:
     - name: Swagger__DocumentDescription
       value: "SwaggerInfo.md"
     - name: CORS
-      value: "localhost;wtp-frontend.hii.or.th;mike-mine.mike-cloud-dev.com"
+      value: "localhost;wtp-frontend.test.com;mike-mine.mike-cloud-dev.com"
   service:
       type: ClusterIP
       port: 80
@@ -342,7 +342,7 @@ geoserver:
     - name: GEOSERVER_DATA_DIR
       value: "/opt/geoserver/data_dir"
     - name: HTTP_PROXY_NAME
-      value: "wtp-geoserver.hii.or.th"
+      value: "wtp-geoserver.test.com"
     - name: HTTP_SCHEME
       value: "https"
     - name: SSL
@@ -372,6 +372,19 @@ geoserver:
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.ingress.kubernetes.io/session-cookie-expires: "5"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
+  volume:
+    hostPath: /water-status-data/geoserver
+
+xample:
+  replicaCount: 1
+  image:
+    repository: docker.io/nginxdemos/hello
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+      # name: wtp-routerapi-svc
+      type: ClusterIP
+      port: 80
 
 
 ingress:
@@ -382,77 +395,84 @@ ingress:
     # cert-manager.io/cluster-issuer: "selfsigned-issuer"
     # cert-manager.io/issuer: "letsencrypt-staging"
     nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/rewrite-target: /    
-    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: wtp-api.hii.or.th
+    - host: wtp-api.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-api-svc
             port: 80
-    - host: wtp-routerapi.hii.or.th
+    - host: wtp-routerapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-routerapi-svc
             port: 80            
-    - host: wtp-frontend.hii.or.th
+    - host: wtp-frontend.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-frontend-svc
             port: 80      
-    - host: wtp-db.hii.or.th
+    - host: wtp-db.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-db-svc
             port: 5432                 
-    - host: wtp-dsdb.hii.or.th
+    - host: wtp-dsdb.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-dsapidb-svc
             port: 5432
-    - host: wtp-dsapi.hii.or.th
+    - host: wtp-dsapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-dsapi-svc
             port: 80         
-    - host: wtp-pyapi.hii.or.th
+    - host: wtp-pyapi.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-pyapi-svc
             port: 80          
-    - host: wtp-geoserver.hii.or.th
+    - host: wtp-geoserver.test.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-geoserver-svc
-            port: 80                   
+            port: 80         
+    - host: xample.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: dhiwtp-xample-svc
+            port: 80                        
   tls: #[]
    - secretName: dhiwtp-tls
   #  - secretName: letsencrypt-staging-tls
      hosts:
-      - wtp-frontend.hii.or.th
-      - wtp-api.hii.or.th
-      - "*.hii.or.th"
+      # - wtp-frontend.test.com
+      # - wtp-api.test.com
+      - "*.test.com"
 
 cert-manager: #defined by either the name or alias of your dependency in Chart.yaml
-  enabled: true
+  enabled: false
   # namespace: cert-manager
-  installCRDs: true
+  # installCRDs: true
