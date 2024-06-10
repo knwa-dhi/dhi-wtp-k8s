@@ -46,7 +46,6 @@ spec:
           {{- end }}          
           volumeMounts:
             - mountPath: "/code/app/config/data"
-              # subPath: "data_dir"
               name: pyapi-volume
       volumes:
         - name: pyapi-volume
