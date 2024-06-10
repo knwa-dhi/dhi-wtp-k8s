@@ -318,6 +318,8 @@ pyapi:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   podAnnotations: {}
+  volume:
+    hostPath: /water-status-data/water-status-config
 
 geoserver:
   replicaCount: 1
@@ -408,20 +410,20 @@ ingress:
           service:
             name: dhiwtp-routerapi-svc
             port: 80            
-    # - host: wtp-frontend.hii.or.th
-    #   paths:
-    #     - path: /
-    #       pathType: Prefix
-    #       service:
-    #         name: dhiwtp-frontend-svc
-    #         port: 80      
-    # - host: wtp-db.hii.or.th
-    #   paths:
-    #     - path: /
-    #       pathType: Prefix
-    #       service:
-    #         name: dhiwtp-db-svc
-    #         port: 5432                 
+    - host: wtp-frontend.hii.or.th
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: dhiwtp-frontend-svc
+            port: 80      
+    - host: wtp-db.hii.or.th
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: dhiwtp-db-svc
+            port: 5432                 
     - host: wtp-dsdb.hii.or.th
       paths:
         - path: /

@@ -4,11 +4,12 @@ metadata:
   name: {{ include "wtp.name" . }}-ds-postgres-pv-claim
   labels:
     helm.sh/chart: {{ include "wtp.chart" . }}
-    app.kubernetes.io/name: {{ include "wtp.name" . }}-ds-pv-claim
+    app.kubernetes.io/name: {{ include "wtp.name" . }}-ds-postgres-pv-claim
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  volumeName: {{ include "wtp.name" . }}-ds-postgres-pv-volume
   storageClassName: manual
   accessModes:
     - ReadWriteMany

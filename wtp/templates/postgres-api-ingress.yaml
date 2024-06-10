@@ -1,26 +1,26 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: postgres-api-ingress
-#   namespace: default
-  labels:
-    helm.sh/chart: {{ include "wtp.chart" . }}
-    app.kubernetes.io/name: {{ include "wtp.name" . }}-postgres-api-ingress
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "TCP"
-spec:
-  ingressClassName: "nginx"
-  rules:
-  - host: wtp-db.hii.or.th
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: dhiwtp-db-svc
-            port:
-              number: 5432
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: postgres-api-ingress
+# #   namespace: default
+#   labels:
+#     helm.sh/chart: {{ include "wtp.chart" . }}
+#     app.kubernetes.io/name: {{ include "wtp.name" . }}-postgres-api-ingress
+#     app.kubernetes.io/instance: {{ .Release.Name }}
+#     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+#     app.kubernetes.io/managed-by: {{ .Release.Service }}
+#   annotations:
+#     nginx.ingress.kubernetes.io/backend-protocol: "TCP"
+# spec:
+#   ingressClassName: "nginx"
+#   rules:
+#   - host: wtp-db.hii.or.th
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: dhiwtp-db-svc
+#             port:
+#               number: 5432

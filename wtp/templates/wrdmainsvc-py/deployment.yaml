@@ -44,3 +44,11 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}          
+          volumeMounts:
+            - mountPath: "/code/app/config/data"
+              # subPath: "data_dir"
+              name: pyapi-volume
+      volumes:
+        - name: pyapi-volume
+          persistentVolumeClaim:
+            claimName: {{ include "wtp.name" . }}-pyapi-pv-claim              
