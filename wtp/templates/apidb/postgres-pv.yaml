@@ -16,4 +16,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/c/water-status-data"
+    path: "/run/desktop/mnt/host/c/water-status-data"

@@ -178,7 +178,8 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240517.2-dev"
+    tag: "20240610.3-dev"
+    # tag: "20240517.2-dev"
   containerPorts: 
     - name: http
       containerPort: 80
@@ -199,6 +200,14 @@ frontend:
     - name: DefaultDomainServicesURL
       value: "https://wtp-dsapi.dd.com"
     - name: DefaultBaseURLPy
+      value: "https://wtp-pyapi.dd.com"
+    - name: NX_DEFAULT_BASE_URL
+      value: "https://wtp-api.dd.com"
+    - name: NX_DEFAULT_BASE_URL_GATEWAY
+      value: "https://wtp-routerapi.dd.com"
+    - name: NX_DEFAULT_DOMAIN_SERVICES_URL
+      value: "https://wtp-dsapi.dd.com"
+    - name: NX_DEFAULT_BASE_URL_PY
       value: "https://wtp-pyapi.dd.com"
     - name: ClientId
       value: "Water Tools"
@@ -319,8 +328,8 @@ pyapi:
     targetMemoryUtilizationPercentage: 80
   podAnnotations: {}
   volume:
-    hostPath: /water-status-data/water-status-config
-    
+    hostPath: /run/desktop/mnt/host/c/water-status-data/water-status-config
+
 geoserver:
   replicaCount: 1
     # Overrides the image version.
@@ -369,7 +378,7 @@ geoserver:
     nginx.ingress.kubernetes.io/session-cookie-expires: "5"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
   volume:
-    hostPath: /mnt/c/water-status-data/geoserver
+    hostPath: /run/desktop/mnt/host/c/water-status-data/geoserver
 
 xample:
   replicaCount: 1
