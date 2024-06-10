@@ -16,4 +16,4 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/water-status-data"
+    path: "/mnt/c/water-status-data"

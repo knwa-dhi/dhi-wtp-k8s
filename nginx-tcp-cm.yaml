@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
-  "5432": "default/dhiwtp-db-svc:5432"
+  5432: "default/dhiwtp-db-svc:5432"

@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  volumeName: {{ include "wtp.name" . }}-ds-postgres-pv-volume
   storageClassName: manual
   accessModes:
     - ReadWriteMany
