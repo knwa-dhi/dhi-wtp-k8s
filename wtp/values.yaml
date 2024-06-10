@@ -318,7 +318,9 @@ pyapi:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
   podAnnotations: {}
-
+  volume:
+    hostPath: /water-status-data/water-status-config
+    
 geoserver:
   replicaCount: 1
     # Overrides the image version.
