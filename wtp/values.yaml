@@ -178,7 +178,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240610.3-dev"
+    tag: "20240611.4-dev"
     # tag: "20240517.2-dev"
   containerPorts: 
     - name: http
