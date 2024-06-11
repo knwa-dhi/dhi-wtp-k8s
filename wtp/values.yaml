@@ -315,7 +315,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240606.7-dev"
+    tag: "20240610.4-dev"
   envs:
   service:
       type: ClusterIP

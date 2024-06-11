@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": "keep"
 spec:
   volumeName: {{ include "wtp.name" . }}-postgres-pv-volume
   storageClassName: manual
