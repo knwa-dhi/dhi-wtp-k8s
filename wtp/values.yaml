@@ -178,7 +178,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240610.4-dev"
+    tag: "20240611.4-dev"
   containerPorts: 
     - name: http
       containerPort: 80
@@ -306,7 +306,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240611.4-dev"
+    tag: "20240611.2-dev"
   envs:
   service:
       type: ClusterIP
