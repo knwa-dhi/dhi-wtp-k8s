@@ -18,10 +18,10 @@ wtpdb:
     enabled: true
     username: postgres
     password: 1234
-    database: wrddevdb
+    database: waterdss
     image:
       repository: bitnami/postgresql
-      tag: ""
+      tag: "16"
       pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -178,7 +178,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240611.4-dev"
+    tag: "20240612.2-dev"
   containerPorts: 
     - name: http
       containerPort: 80
@@ -252,8 +252,8 @@ dsapidb:
     password: 1234
     database: wrddomainservicesdb
     image:
-      repository: bitnami/postgresql
-      tag: ""
+      repository: postgres
+      tag: "16"
       pullPolicy: IfNotPresent
   service:
     type: LoadBalancer

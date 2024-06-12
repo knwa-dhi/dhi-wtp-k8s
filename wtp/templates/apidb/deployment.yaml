@@ -8,6 +8,10 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+  # annotations:
+  #   "helm.sh/hook": pre-install
+  #   "helm.sh/hook-weight": "-1"
+  #   "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   replicas: {{ default 1 .Values.wtpdb.replicaCount | int }}
   selector:
@@ -23,6 +27,26 @@ spec:
         app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
+      # securityContext:
+      #   runAsUser: 1001
+      #   fsGroup: 1001    
+      # initContainers:
+      # - name: fix-permissions
+      #   image: busybox # docker.io/bitnami/minideb:buster
+      #   securityContext:
+      #     runAsUser: 0
+      #     runAsGroup: 0
+      #     # allowPrivilegeEscalation: true
+      #   command:
+      #     - /bin/sh
+      #     - -c
+      #     - |
+      #       mkdir -p /bitnami/postgresql/data
+      #       chmod 700 /bitnami/postgresql/data
+      #       xargs chown -R hydro:hydro /bitnami/postgresql/data
+      #   volumeMounts:
+      #   - name: postgres-persistance-storage
+      #     mountPath: /bitnami/postgresql
       containers:
       - name: {{ .Chart.Name }}-db
         image: "{{ .Values.wtpdb.postgresql.image.repository }}:{{ .Values.wtpdb.postgresql.image.tag | default "latest" }}"
@@ -37,8 +61,12 @@ spec:
           value: "{{ .Values.wtpdb.postgresql.password }}"
         - name: POSTGRES_DB
           value: "postgres"
+        - name: POSTGRESQL_VOLUME_DIR
+          value: "/bitnami/postgresql"
+        # - name: PGDATA
+        #   value: "/bitnami/postgresql/data/pgdata"          
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
+        - mountPath: /bitnami/postgresql
           name: postgres-persistance-storage
       volumes:
         - name: postgres-persistance-storage

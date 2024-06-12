@@ -16,4 +16,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/water-status-data"
+    path: "/mnt/apidb-postgresql"
+    # path: "/water-status-data/apidb-postgresql"

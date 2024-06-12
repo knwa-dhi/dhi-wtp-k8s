@@ -8,6 +8,10 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+  # annotations:
+  #   "helm.sh/hook": pre-install
+  #   "helm.sh/hook-weight": "-2"
+  #   "helm.sh/hook-delete-policy": before-hook-creation    
 spec:
   replicas: {{ default 1 .Values.dsapidb.replicaCount | int }}
   selector:
@@ -23,22 +27,27 @@ spec:
         app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
+      # securityContext:
+      #   runAsUser: 1001
+      #   runAsGroup: 1001
+      #   fsGroup: 1001    
       # initContainers:
-      # - name: init-create-db
-      #   image: "{{ .Values.dsapidb.postgresql.image.repository }}:{{ .Values.dsapidb.postgresql.image.tag | default "latest" }}"
-      #   command: ['sh', '-c', 'cp /config/create_db.sh /scripts/ && chmod +x /scripts/create_db.sh && /scripts/create_db.sh']
+      # - name: fix-permissions
+      #   image: busybox
+      #   securityContext:
+      #     runAsUser: 0
+      #     runAsGroup: 0
+      #     # allowPrivilegeEscalation: true
+      #   command:
+      #     - /bin/sh
+      #     - -c
+      #     - |
+      #       mkdir -p /var/lib/postgresql/data
+      #       chmod 700 /var/lib/postgresql/data
+      #       xargs chown -R 1001:1001 /var/lib/postgresql/data
       #   volumeMounts:
-      #   - name: config-volume
-      #     mountPath: /config
-      #   - name: script-volume
-      #     mountPath: /scripts
-      #   env:
-      #   - name: POSTGRES_USER
-      #     value: "{{ .Values.dsapidb.postgresql.username }}"
-      #   - name: POSTGRES_PASSWORD
-      #     value: "{{ .Values.dsapidb.postgresql.password }}"
-      #   - name: PGHOST
-      #     value: "localhost"  # Ensure it tries to connect to localhost
+      #   - name: ds-postgres-persistance-storage
+      #     mountPath: /var/lib/postgresql/data
       containers:
       - name: {{ .Chart.Name }}-dsapidb
         image: "{{ .Values.dsapidb.postgresql.image.repository }}:{{ .Values.dsapidb.postgresql.image.tag | default "latest" }}"
@@ -53,11 +62,14 @@ spec:
           value: "{{ .Values.dsapidb.postgresql.password }}"
         - name: POSTGRES_DB
           value: "postgres"
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: ds-postgres-persistance-storage
-        - name: postgre-initdb
-          mountPath: /docker-entrypoint-initdb.d
+          - mountPath: /var/lib/postgresql/data
+            # subPath: data
+            name: ds-postgres-persistance-storage
+          - name: postgre-initdb
+            mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: ds-postgres-persistance-storage
           persistentVolumeClaim:

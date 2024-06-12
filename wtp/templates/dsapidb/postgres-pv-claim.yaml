@@ -12,7 +12,7 @@ spec:
   volumeName: {{ include "wtp.name" . }}-ds-postgres-pv-volume
   storageClassName: manual
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
