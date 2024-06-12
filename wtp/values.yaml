@@ -20,8 +20,8 @@ wtpdb:
     password: 1234
     database: wrddevdb
     image:
-      repository: bitnami/postgresql
-      tag: ""
+      repository: postgres
+      tag: "16"
       pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -261,8 +261,8 @@ dsapidb:
     password: 1234
     database: wrddomainservicesdb
     image:
-      repository: bitnami/postgresql
-      tag: ""
+      repository: postgres
+      tag: "16"
       pullPolicy: IfNotPresent
   service:
     type: LoadBalancer

@@ -17,4 +17,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/run/desktop/mnt/host/c/water-status-data"
+    path: "/run/desktop/mnt/host/c/water-status-data/postgresql/wtpapidb"
