@@ -28,23 +28,23 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       # securityContext:
-      #   runAsUser: 1001
-      #   runAsGroup: 1001
+      #   fsGroup: 1000  # GID dari knwa
+      #   fsGroupChangePolicy: Always
       #   fsGroup: 1001    
       # initContainers:
       # - name: fix-permissions
       #   image: busybox
       #   securityContext:
-      #     runAsUser: 0
-      #     runAsGroup: 0
+      #     runAsUser: 1000
+      #     runAsGroup: 1000
       #     # allowPrivilegeEscalation: true
       #   command:
       #     - /bin/sh
       #     - -c
       #     - |
-      #       mkdir -p /var/lib/postgresql/data
-      #       chmod 700 /var/lib/postgresql/data
-      #       xargs chown -R 1001:1001 /var/lib/postgresql/data
+      #       mkdir -p /var/lib/postgresql/data /var/lib/postgresql/data/pgdata
+      #       chmod 777 /var/lib/postgresql /var/lib/postgresql/data/pgdata
+      #       xargs chown -R 1000:1000 /var/lib/postgresql/data /var/lib/postgresql/data/pgdata
       #   volumeMounts:
       #   - name: ds-postgres-persistance-storage
       #     mountPath: /var/lib/postgresql/data
@@ -62,14 +62,18 @@ spec:
           value: "{{ .Values.dsapidb.postgresql.password }}"
         - name: POSTGRES_DB
           value: "postgres"
-        - name: PGDATA
-          value: "/var/lib/postgresql/data/pgdata"
+        # - name: PGDATA
+        #   value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             # subPath: data
             name: ds-postgres-persistance-storage
           - name: postgre-initdb
             mountPath: /docker-entrypoint-initdb.d
+        # securityContext:
+        #   runAsUser: 1000  # UID dari knwa
+        #   runAsGroup: 1000 # GID dari knwa
+          # fsGroup: 1000    # GID dari knwa            
       volumes:
         - name: ds-postgres-persistance-storage
           persistentVolumeClaim:

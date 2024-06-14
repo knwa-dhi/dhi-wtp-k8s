@@ -62,11 +62,11 @@ spec:
         - name: POSTGRES_DB
           value: "postgres"
         - name: POSTGRESQL_VOLUME_DIR
-          value: "/bitnami/postgresql"
+          value: "/var/lib/postgresql/data"
         # - name: PGDATA
         #   value: "/bitnami/postgresql/data/pgdata"          
         volumeMounts:
-        - mountPath: /bitnami/postgresql
+        - mountPath: /var/lib/postgresql/data
           name: postgres-persistance-storage
       volumes:
         - name: postgres-persistance-storage

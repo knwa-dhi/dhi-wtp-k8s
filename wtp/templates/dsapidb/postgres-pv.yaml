@@ -16,5 +16,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: "/mnt/dsapidb-data"
     # path: "/water-status-data/dsapidb-postgresql"

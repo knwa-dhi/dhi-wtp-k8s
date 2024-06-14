@@ -20,7 +20,7 @@ wtpdb:
     password: 1234
     database: waterdss
     image:
-      repository: bitnami/postgresql
+      repository: docker.io/postgres  # bitnami/postgresql
       tag: "16"
       pullPolicy: IfNotPresent
   service:
@@ -252,11 +252,11 @@ dsapidb:
     password: 1234
     database: wrddomainservicesdb
     image:
-      repository: postgres
+      repository: docker.io/postgres
       tag: "16"
       pullPolicy: IfNotPresent
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 5432
 
 dsapi:
