@@ -41,6 +41,9 @@ spec:
             - mountPath: "/opt/geoserver/data_dir"
               subPath: "data_dir"
               name: geoserver-volume
+            - mountPath: "/opt/geoserver/raster_dir"
+              subPath: "raster_dir"
+              name: geoserver-volume-raster
           {{- with .Values.geoserver.envs }}
           env:
             {{- toYaml . | nindent 12 }}
@@ -48,4 +51,7 @@ spec:
       volumes:
         - name: geoserver-volume
           persistentVolumeClaim:
-            claimName: {{ include "wtp.name" . }}-geoserver-pv-claim           
+            claimName: {{ include "wtp.name" . }}-geoserver-pv-claim
+        - name: geoserver-volume-raster
+          persistentVolumeClaim:
+            claimName: {{ include "wtp.name" . }}-geoserver-raster-pv-claim    

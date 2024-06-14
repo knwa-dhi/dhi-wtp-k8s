@@ -370,6 +370,7 @@ geoserver:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
   volume:
     hostPath: /water-status-data/geoserver
+    rasterHostPath: /water-status-data/data-geoserver
 
 xample:
   replicaCount: 1
