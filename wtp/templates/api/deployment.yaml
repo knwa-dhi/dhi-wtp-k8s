@@ -54,6 +54,11 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 1.1.1.1       
       {{- with .Values.wtpapi.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

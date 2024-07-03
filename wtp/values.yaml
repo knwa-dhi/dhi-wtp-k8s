@@ -33,7 +33,7 @@ wtpapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api
     pullPolicy: IfNotPresent
-    tag: "20240520.1-dev"
+    tag: "20240619.1-dev"
   containerPort: 80
   envs:
     - name: ASPNETCORE_ENVIRONMENT
@@ -43,7 +43,9 @@ wtpapi:
     - name: App__CorsOrigins
       value: "https://wtp-frontend.hii.or.th,https://wtp-routerapi.hii.or.th,https://wtp-api.hii.or.th"
     - name: App__WebUrl
-      value: "https://wtp-frontend.hii.or.th,"
+      value: "https://wtp-frontend.hii.or.th"
+    - name: App__WorkspaceLandingPage
+      value: "https://wtp-frontend.hii.or.th/portal/workspaces/{0}"      
     - name: PortalInfo__Container
       value: "https://wtp-routerapi.hii.or.th"
     - name: PortalInfo__Url
@@ -306,7 +308,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240611.2-dev"
+    tag: "20240618.1-dev"
   envs:
   service:
       type: ClusterIP
@@ -453,7 +455,7 @@ ingress:
           service:
             name: dhiwtp-geoserver-svc
             port: 80         
-    - host: xample.hii.or.th
+    - host: xample.test.com
       paths:
         - path: /
           pathType: Prefix

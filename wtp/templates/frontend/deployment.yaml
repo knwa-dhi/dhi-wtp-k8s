@@ -58,6 +58,11 @@ spec:
           {{- end }}          
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 1.1.1.1            
       #     volumeMounts:
       #       - mountPath: /config
       #         name: config
