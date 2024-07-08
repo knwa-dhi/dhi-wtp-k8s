@@ -396,14 +396,14 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: api.waterdss.odss.com
+    - host: api-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-api-svc
             port: 80
-    - host: routerapi.waterdss.odss.com
+    - host: routerapi-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
@@ -417,35 +417,35 @@ ingress:
           service:
             name: dhiwtp-frontend-svc
             port: 80      
-    - host: apidb.waterdss.odss.com
+    - host: apidb-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-db-svc
             port: 5432                 
-    - host: dsapidb.waterdss.odss.com
+    - host: dsapidb-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-dsapidb-svc
             port: 5432
-    - host: dsapi.waterdss.odss.com
+    - host: dsapi-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-dsapi-svc
             port: 80         
-    - host: pyapi.waterdss.odss.com
+    - host: pyapi-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
           service:
             name: dhiwtp-pyapi-svc
             port: 80          
-    - host: geoserver.waterdss.odss.com
+    - host: geoserver-waterdss.odss.com
       paths:
         - path: /
           pathType: Prefix
