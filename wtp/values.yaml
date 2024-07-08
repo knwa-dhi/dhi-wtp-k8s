@@ -180,7 +180,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240612.2-dev"
+    tag: "20240708.4-dev"
   containerPorts: 
     - name: http
       containerPort: 80
@@ -308,7 +308,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240618.1-dev"
+    tag: "20240705.3-dev"
   envs:
   service:
       type: ClusterIP
@@ -462,11 +462,11 @@ ingress:
           service:
             name: dhiwtp-xample-svc
             port: 80                        
-  tls: #[]
-   - secretName: dhiwtp-tls
-  #  - secretName: letsencrypt-staging-tls
-     hosts:
-      - "*.hii.or.th"
+  # tls: #[]
+  #  - secretName: dhiwtp-tls
+  # #  - secretName: letsencrypt-staging-tls
+  #    hosts:
+  #     - "*.hii.or.th"
 
 cert-manager: #defined by either the name or alias of your dependency in Chart.yaml
   enabled: false
