@@ -47,12 +47,11 @@ spec:
           volumeMounts:
             - mountPath: "/code/app/config/data"
               name: pyapi-volume
-      dnsPolicy: None
+      dnsPolicy: ClusterFirst
       dnsConfig:
         nameservers:
           - 8.8.8.8
-          - 8.8.4.4
-          - 1.1.1.1
+          - 1.1.1.1   
       volumes:
         - name: pyapi-volume
           persistentVolumeClaim:
