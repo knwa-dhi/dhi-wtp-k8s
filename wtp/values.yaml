@@ -33,7 +33,7 @@ wtpapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api
     pullPolicy: IfNotPresent
-    tag: "20240520.1-dev"
+    tag: "20240619.1-dev"
   containerPort: 80
   envs:
     - name: ASPNETCORE_ENVIRONMENT
@@ -178,7 +178,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240611.4-dev"
+    tag: "20240708.4-dev"
     # tag: "20240517.2-dev"
   containerPorts: 
     - name: http
@@ -315,7 +315,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240610.4-dev"
+    tag: "20240705.3-dev"
   envs:
   service:
       type: ClusterIP
@@ -378,7 +378,8 @@ geoserver:
     nginx.ingress.kubernetes.io/session-cookie-expires: "5"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
   volume:
-    hostPath: /run/desktop/mnt/host/c/water-status-data/geoserver
+    hostPath: /water-status-data/geoserver
+    rasterHostPath: /water-status-data/data-geoserver
 
 xample:
   replicaCount: 1
