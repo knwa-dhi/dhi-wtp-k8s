@@ -41,13 +41,13 @@ wtpapi:
     - name: ConnectionStrings__Default
       value: "Host=dhiwtp-db-svc;Port=5432;Username=postgres;Password=1234;Database=waterdss;Include Error Detail=true;"
     - name: App__CorsOrigins
-      value: "https://waterdss.odss.com,https://routerapi.waterdss.odss.com,https://api.waterdss.odss.com"
+      value: "https://waterdss.odss.com,https://routerapi-waterdss.odss.com,https://api-waterdss.odss.com"
     - name: App__WebUrl
       value: "https://waterdss.odss.com,"
     - name: PortalInfo__Container
-      value: "https://routerapi.waterdss.odss.com"
+      value: "https://routerapi-waterdss.odss.com"
     - name: PortalInfo__Url
-      value: "https://routerapi.waterdss.odss.com"
+      value: "https://routerapi-waterdss.odss.com"
     - name: Authentication__OpenId__ClientId
       value: "Water Tools"
     - name: Authentication__OpenId__Authority
@@ -191,25 +191,25 @@ frontend:
     - name: Applications
       value: "mine;mine-result;mine-dashboard;subscriptions;workspaces;datamanagement;waterstatus;planningtools;mine-reco;mine-dama"
     - name: DefaultBaseURL
-      value: "https://api.waterdss.odss.com"
+      value: "https://api-waterdss.odss.com"
     - name: DefaultBaseURLOld
-      value: "https://routerapi.waterdss.odss.com"
+      value: "https://routerapi-waterdss.odss.com"
     - name: DefaultBaseURLGateway
-      value: "https://routerapi.waterdss.odss.com"
+      value: "https://routerapi-waterdss.odss.com"
     - name: DefaultDomainServicesURL
-      value: "https://dsapi.waterdss.odss.com"
+      value: "https://dsapi-waterdss.odss.com"
     - name: DefaultBaseURLPy
-      value: "https://pyapi.waterdss.odss.com"
+      value: "https://pyapi-waterdss.odss.com"
     - name: ClientId
       value: "Water Tools"
     - name: Authority
       value: "https://login.mike-cloud-dev.com"
     - name: ContentDefaultSource
-      value: "waterdss.odss.com;dsapi.waterdss.odss.com;api.mapbox.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;www.youtube.com"
+      value: "waterdss.odss.com;dsapi-waterdss.odss.com;api.mapbox.com;mapsapp.azurewebsites.net;simulations.azurewebsites.net;www.youtube.com"
     - name: ContentConnectSource
-      value: "login.mike-cloud-dev.com;api.waterdss.odss.com;routerapi.waterdss.odss.com;dsapi.waterdss.odss.com;api.mapbox.com;events.mapbox.com;geoserver.waterdss.odss.com;ipv4.icanhazip.com;dhigroup.matomo.cloud; data:"
+      value: "login.mike-cloud-dev.com;api-waterdss.odss.com;routerapi-waterdss.odss.com;dsapi-waterdss.odss.com;api.mapbox.com;events.mapbox.com;geoserver.waterdss.odss.com;ipv4.icanhazip.com;dhigroup.matomo.cloud; data:"
     - name: ContentImageSource
-      value: "api.waterdss.odss.com;routerapi.waterdss.odss.com;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
+      value: "api-waterdss.odss.com;routerapi-waterdss.odss.com;api.mapbox.com;a.basemaps.cartocdn.com;b.basemaps.cartocdn.com;c.basemaps.cartocdn.com;d.basemaps.cartocdn.com"
     - name: ContentScriptSource
       value: "www.youtube.com;unpkg.com;api.mapbox.com;dhigroup.matomo.cloud "
     - name: ContentStyleSource
