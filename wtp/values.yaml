@@ -33,7 +33,7 @@ wtpapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api
     pullPolicy: IfNotPresent
-    tag: "20240619.1-dev"
+    tag: "20240710.1-dev"
   containerPort: 80
   envs:
     - name: ASPNETCORE_ENVIRONMENT
@@ -229,6 +229,8 @@ frontend:
       value: "False"
     - name: ContentFrameAncestors
       value: "https://wtp-frontend.dd.com"
+    - name: UseOpenId
+      value: "False"      
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -378,8 +380,8 @@ geoserver:
     nginx.ingress.kubernetes.io/session-cookie-expires: "5"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
   volume:
-    hostPath: /water-status-data/geoserver
-    rasterHostPath: /water-status-data/data-geoserver
+    hostPath: /run/desktop/mnt/host/c/water-status-data/geoserver
+    rasterHostPath: /run/desktop/mnt/host/c/water-status-data/data-geoserver
 
 xample:
   replicaCount: 1
