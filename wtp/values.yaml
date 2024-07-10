@@ -33,7 +33,7 @@ wtpapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/waterdss-portal-api
     pullPolicy: IfNotPresent
-    tag: "20240619.1-dev"
+    tag: "20240710.1-dev"
   containerPort: 80
   envs:
     - name: ASPNETCORE_ENVIRONMENT
@@ -222,6 +222,8 @@ frontend:
       value: "False"
     - name: ContentFrameAncestors
       value: "https://wtp-frontend.hii.or.th"
+    - name: UseOpenId
+      value: "True"      
   autoscaling:
     enabled: false
     minReplicas: 1
