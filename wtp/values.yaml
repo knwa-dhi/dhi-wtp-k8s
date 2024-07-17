@@ -180,7 +180,7 @@ frontend:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrd-mike-mine
     pullPolicy: IfNotPresent
-    tag: "20240708.4-dev"
+    tag: "20240715.3-dev"
   containerPorts: 
     - name: http
       containerPort: 80
@@ -222,8 +222,6 @@ frontend:
       value: "False"
     - name: ContentFrameAncestors
       value: "https://wtp-frontend.hii.or.th"
-    - name: UseOpenId
-      value: "True"      
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -310,7 +308,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240705.3-dev"
+    tag: "20240716.1-dev"
   envs:
   service:
       type: ClusterIP
@@ -386,6 +384,57 @@ xample:
       # name: wtp-routerapi-svc
       type: ClusterIP
       port: 80
+
+geoserver2:
+  replicaCount: 1
+    # Overrides the image version.
+  image:
+    repository: docker.io/kartoza/geoserver
+    pullPolicy: IfNotPresent
+    tag: "2.23.2"
+  envs:
+    - name: COMMUNITY_EXTENSIONS
+      value: "cog-plugin"
+    - name: GEOSERVER_ADMIN_PASSWORD
+      value: "win!geoserver2023"
+    - name: GEOSERVER_ADMIN_USER
+      value: "dhi-admin"
+    - name: GEOSERVER_DATA_DIR
+      value: "/opt/geoserver/data_dir"
+    - name: HTTP_PROXY_NAME
+      value: "wtp-geoserver.hii.or.th"
+    - name: HTTP_SCHEME
+      value: "https"
+    - name: SSL
+      value: "true"
+    - name: STABLE_EXTENSIONS
+      value: "css-plugin,feature-pregeneralized-plugin,netcdf-plugin"
+    - name: WEBSITE_HTTPLOGGING_RETENTION_DAYS
+      value: "7"
+    - name: WEBSITES_CONTAINER_START_TIME
+      value: "1800"      
+    - name: WEBSITES_ENABLE_APP_SERVICE_STORAGE
+      value: "true"
+    - name: XFRAME_OPTIONS
+      value: "false"           
+  service:
+    type: ClusterIP
+    port: 80
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  podAnnotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "5"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "5"
+  volume:
+    hostPath: /water-status-data/geoserver-2
+    rasterHostPath: /water-status-data/data-geoserver-2
 
 
 ingress:
@@ -463,7 +512,14 @@ ingress:
           pathType: Prefix
           service:
             name: dhiwtp-xample-svc
-            port: 80                        
+            port: 80      
+    - host: wtp-geoserver.test.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service:
+            name: dhiwtp-geoserver-svc-2
+            port: 80                                    
   # tls: #[]
   #  - secretName: dhiwtp-tls
   # #  - secretName: letsencrypt-staging-tls
