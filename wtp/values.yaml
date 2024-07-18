@@ -308,7 +308,7 @@ pyapi:
   image:
     repository: dhiacrdev.azurecr.io/wrd/wrdmainservices
     pullPolicy: IfNotPresent
-    tag: "20240716.1-dev"
+    tag: "20240716.3-dev"
   envs:
   service:
       type: ClusterIP
@@ -512,14 +512,7 @@ ingress:
           pathType: Prefix
           service:
             name: dhiwtp-xample-svc
-            port: 80      
-    - host: wtp-geoserver.test.com
-      paths:
-        - path: /
-          pathType: Prefix
-          service:
-            name: dhiwtp-geoserver-svc-2
-            port: 80                                    
+            port: 80                                        
   # tls: #[]
   #  - secretName: dhiwtp-tls
   # #  - secretName: letsencrypt-staging-tls
