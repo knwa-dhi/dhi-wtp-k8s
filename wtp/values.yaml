@@ -93,7 +93,7 @@ wtpapi:
     - name: DeploymentType
       value: "Kubernetes"
     - name: Sendgrid__Secret
-      value: "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"
+      value: ""
     - name: PassPhrase
       value: "wrddev_portal_key"
     - name: DomainServices__Username
