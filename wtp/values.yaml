@@ -7,8 +7,8 @@ fullnameOverride: ""
 
 imageCredentials:
   registry: dhiacrdev.azurecr.io
-  username: dhiacrdev
-  password: 5+OOK6govNjw2EeSZqvLopI9Swrr4FGt
+  username: 
+  password: 
   email: 
 
 wtpdb:
